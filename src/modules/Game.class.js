@@ -227,19 +227,37 @@ class Game {
   }
 
   checkLose() {
-    let count = 0;
+    let hasEmptyCells = false;
 
     for (let i = 0; i <= 3; i++) {
       for (let n = 0; n <= 3; n++) {
         if (this.state[i][n] === 0) {
-          count++;
+          hasEmptyCells = true;
         }
       }
     }
 
-    if (count === 0) {
-      this.lose();
+    if (hasEmptyCells) {
+      return;
     }
+
+    for (let i = 0; i <= 3; i++) {
+      for (let n = 0; n < 3; n++) {
+        if (this.state[i][n] === this.state[i][n + 1]) {
+          return;
+        }
+      }
+    }
+
+    for (let i = 0; i < 3; i++) {
+      for (let n = 0; n <= 3; n++) {
+        if (this.state[i][n] === this.state[i + 1][n]) {
+          return;
+        }
+      }
+    }
+
+    this.lose();
   }
 
   lose() {
